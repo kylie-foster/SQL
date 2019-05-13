@@ -1,3 +1,5 @@
+```distinct```
+
 ## Grouping: Using ```GROUP BY``` and ```HAVING```
 
 Example of how to use ```GROUP BY```:
