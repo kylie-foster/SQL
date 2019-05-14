@@ -77,7 +77,12 @@ SELECT -- columns to select
 FROM customers -- table to import data from
 ORDER BY customer_name
 ```
+## Joining Tables
+### Cartesian (Cross) Join
 
+Each row from the first table joins with all the rows of the second table. e.g if your first table as x rows and your second table as y rows, the merged table will have x*y rows.
+
+https://www.w3resource.com/w3r_images/cross-join-round.png
 ## Other Notes
 
 Can use www.poorsql.com to automatically format and indent SQL code.
