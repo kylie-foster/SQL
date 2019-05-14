@@ -37,3 +37,47 @@ by a ```WHERE``` clause will not be included in a group.
 | GROUP BY | Columns to use for grouping | 
 | HAVING | Filter applied to groups | 
 | ORDER BY | Output sort order |
+
+## Using Subqueries
+
+Subqueries are queries embedded inside other queries.
+
+Useful for merging data from two or more tables.
+
+Example  :
+```SQL
+-- Need to know the region each customer is from (info in Customers table) 
+-- who has had an order with freight over 100 (info in Orders table)
+SELECT -- columns to select
+CustomerID,
+CompanyName,
+Region
+FROM Customers -- table to import data from
+WHERE customerID in (SELECT customerID-- start of subquery
+      FROM Orders
+      WHERE Freight > 100) -- subquery gives customerID values for which Freight is greater than 
+                           -- 100 using data in table Orders rather than Customers
+```
+The innermost ```SELECT``` statement is always performed first.
+
+Subquery selects can only retrieve a single column.
+
+Example of using subqueries for calculations:
+```SQL
+-- Need to know the total number of orders (info in Orders table) 
+-- placed be every customer, including their name and state (info in Customers table)
+SELECT -- columns to select
+     customer_name,
+     customer_state -- possibly missing a comma here
+     (SELECT COUNT(*) AS orders -- subquery counting all orders for customer IDs in 
+                                -- both Orders and Customer tables, to use as a column for outer
+                                -- SELECT statement
+     FROM Orders
+     WHERE Orders.customer_id = Customer.customer_id) AS orders
+FROM customers -- table to import data from
+ORDER BY customer_name
+```
+
+## Other Notes
+
+Can use www.poorsql.com to automatically format and indent SQL code.
