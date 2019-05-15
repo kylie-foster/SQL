@@ -1,5 +1,3 @@
-```distinct```
-
 ## Grouping: Using ```GROUP BY``` and ```HAVING```
 
 Example of how to use ```GROUP BY```:
@@ -175,10 +173,119 @@ SELECT column_name(s) -- second SELECT statement
 FROM table2;
 -- (can also include WHERE statement here)
 ```
-
-
-
 Not used very often, but still useful.
+
+## Strings
+
+### Concatenate
+Join multiple strings. Use || (or in SQL server +).
+
+Example:
+```SQL
+SELECT CompanyName,
+ContactName,
+CompanyName || ' ('|| ContactName||')' -- results in CompanyName (ContactName)
+FROM customers
+```
+### Trim
+Can remove parts at the start or end of a string.
+
+Example:
+```SQL
+SELECT TRIM("   You the best.   ") -- removes the leading and trailing spaces.
+AS TrimmedString
+```
+### Substring
+Returns the specified number of characters from a particular position of a given string.
+
+Syntax:
+```SQL
+SUBSTR(string name, string position, number of characters to be returned);
+```
+Example:
+```SQL
+SELECT first_name, 
+SUBSTR (first_name,3,4) -- starts at the 3rd character in the string first_name 
+                        -- and takes four characters in total
+FROM employees;
+```
+### Changing the case of strings
+Use UPPER or UCASE (both change all strings to uppercase), LOWER (changes all strings to lowercase). 
+They all have the same syntax:
+
+```SQL
+SELECT UPPER(column_name) FROM table_name;
+```
+### Date and time strings
+Date formats in SQLlite:
+
+DATE: YYYY-MM-DD
+
+DATETIME: YYYY-MM-DD HH:MI:SS
+
+TIMESTAMP: YYYY-MM-DD HH:MI:SS
+
+#### STRFTIME
+String format time.
+
+Example:
+```SQL
+SELECT Birthdate,
+STRFTIME('%Y', Birthdate) AS Year, -- creates column containing the year part of the date in Birthdate
+STRFTIME('%m', Birthdate) AS Month, -- creates column containing the date in Birthdate
+STRFTIME('%d', Birthdate) AS Day -- creates column containing the date in Birthdate
+FROM employees
+```
+
+#### Compute current date
+
+```SQL
+SELECT DATE('now')
+
+SELECT STRFTIME('%Y %m %d', 'now') -- computes the current year, month and date
+
+SELECT STFRTIME('%H %M %S %s', 'now') -- computes the current hour, minute, second and millisecond
+```
+
+Example of how to use 'now' in a calculation:
+
+```SQL
+SELECT Birthdate,
+DATE(('now') - Birthdate) AS Age -- calculates a persons age based on their birthdate and the current date
+FROM employees
+```
+
+## Case Statements
+Mimics if-then-else statement.
+
+Can be used in SELECT, INSERT, UPDATE and DELETE statements.
+
+Syntax:
+
+```SQL
+CASE input_expression
+    WHEN when_expression THEN result_expression
+    WHEN when_expression2 THEN result_expression2
+    ...
+    [ELSE else_result_expression]
+END
+```
+
+Example:
+```SQL
+-- Creating a new column that (Calgary) that has the value Calgary or Other 
+-- based on the value of the City column
+SELECT employeeid,
+firstname,
+lastname,
+city
+CASE city WHEN 'Calgary' THEN 'Calgary'
+ELSE 'Other'
+    END calgary -- names the column
+FROM Employees
+```
+## Views
+A VIEW is a stored query (temporary table). The view will be removed after database connection has ended (does not make a permanent change to the database)
 
 ## Other Notes
 
